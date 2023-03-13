@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: daboyer <daboyer@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/08 13:13:57 by daboyer           #+#    #+#             */
-/*   Updated: 2023/03/13 12:37:13 by daboyer          ###   ########.fr       */
+/*   Created: 2023/03/13 12:40:02 by daboyer           #+#    #+#             */
+/*   Updated: 2023/03/13 12:43:39 by daboyer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read_line(int fd, char *str)
 {
@@ -39,14 +39,14 @@ char	*ft_read_line(int fd, char *str)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*str;
+	static char	*str[4096];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	str = ft_read_line(fd, str);
-	if (!str)
+	str[fd] = ft_read_line(fd, str[fd]);
+	if (!str[fd])   
 		return (NULL);
-	line = ft_get_line(str);
-	str = ft_switch_line(str);
+	line = ft_get_line(str[fd]);
+	str[fd] = ft_switch_line(str[fd]);
 	return (line);
 }
